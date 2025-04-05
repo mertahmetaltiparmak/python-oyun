@@ -28,8 +28,8 @@ def main():
     # knight = pick_hero(1, get_user_name()) 
     hero = pick_hero_input()
     print(f"Suanki Canin:{hero.health}\n")
-    #events.pick_random_event(hero)
-    events.pick_random_event(hero)
-
+    # events.pick_random_event(hero)
+    # events.event_fight(hero)
+    events.event_fountain(hero)
 
 main()
