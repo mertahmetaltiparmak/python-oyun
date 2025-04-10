@@ -14,6 +14,7 @@ class Monster():
     def specialAttack(self, hero):
         print("Rakip guclu bir saldiri yapacakmis gibi gozukuyor.")
         hero.health -= self.attack + 30
+        hero.health += hero.armor
         print_hero_health(hero.health)
 
     def print_stats(self):
