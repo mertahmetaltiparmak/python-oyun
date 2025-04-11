@@ -2,6 +2,11 @@ import random
 import monster
 import events
 import hero
+import room
+from time import sleep
+
+def universal_sleep(x):
+    return sleep(x)
 
 
 def pick_hero_input():
@@ -24,15 +29,17 @@ def get_user_name():
     return input("İsminizi giriniz: ")
 
 def main():
-    lvlOne = monster.Monster("Zombie", 100, 10, 1)
-    # knight = pick_hero(1, get_user_name()) 
     hero = pick_hero_input()
-    print(f"Suanki Canin:{hero.health}\n")
-     # for i in range(0,6):
-        # events.pick_random_event(hero)
-    # events.pick_random_event(hero)
-    events.event_fight(hero)
-    events.event_fight(hero)
-    # events.event_fountain(hero)
+    universal_sleep(0.8)
+    baslangic_odasi = room.Room()
+    baslangic_odasi.starting_room()
+    print(f"\nSuanki Canin:{hero.health}\n")
+    universal_sleep(1)
+
+    for i in range(0,4):
+        events.event_fight(hero)
+        events.pick_random_event(hero)
+    son_oda = room.Room()
+    son_oda.last_room()    
 
 main()
