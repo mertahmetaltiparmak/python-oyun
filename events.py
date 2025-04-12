@@ -1,10 +1,10 @@
 import monster
 import random
-import hero
 import time
 import room
 import item
 from time import sleep
+
 
 def death_screen(hero):
     if hero.health <= 0:
@@ -21,18 +21,20 @@ def hero_regeneration(hero):
 def universal_sleep(x):
     return sleep(x)
 
+random.seed(time.time())
+
 def random_int(start, end):
-    random.seed(time.time())
     return random.randint(start, end)
 
 
 def pick_random_event(hero):
-    randomizer = random_int(1, 3)
-    if randomizer == 1:
+    randomizer = random_int(1, 5)
+    print(randomizer, "\n")
+    if randomizer == 1 or randomizer == 4:
         event_statue(hero)        
-    elif randomizer == 2:
-        event_fight(hero)
     elif randomizer == 3:
+        event_fight(hero)
+    elif randomizer == 2 or randomizer == 5:
         event_fountain(hero)
 
 def event_fountain(hero):
@@ -56,11 +58,11 @@ def event_fountain(hero):
             print("Dikkatli adımlarla diğer odaya ilerliyorsun")
             universal_sleep(1.5)
     elif userInput == 2:
-        print("Yoluna devam etmeye karar verdin")
-
+        print("Yoluna devam etmeye karar verdin...")
+        universal_sleep(1.2)
 
 def monster_generator():
-    names = ["Seytan", "Hiclik Canavari", "Zeng,"]
+    names = ["Zombi", "Hiclik Canavari", "Mumya"]
     selected_name = random.choice(names)
     level = random.randint(1, 10)
     health = random.randint(20, 100) + (level * 5) 
@@ -89,8 +91,12 @@ def event_fight(hero):
             universal_sleep(0.6)
 
     if fight_choice == 1:
-        while True:
-            hero.fight(monster, hero)
+        while hero.health > 0 and monster.health > 0:
+            attack_success = hero.fight(monster, hero)
+
+            if not attack_success:
+                continue  
+
             if monster.health <= 0:
                 print("Canavar yavaşcana toza dönüştü...")
                 universal_sleep(0.7)
@@ -100,8 +106,9 @@ def event_fight(hero):
                 print(f"Canin: {hero.health}\t Manan: {hero.mana}")
                 universal_sleep(1)
                 break
+
             monster.basic_attack(hero)
-            universal_sleep(1.5)
+
             death_screen(hero)
 
     elif fight_choice == 2:
@@ -113,21 +120,25 @@ def event_fight(hero):
         elif runaway_chance >= 4:
             print("Canavar ayak sesini duydu ve sana karşı saldiriya geçti")
             universal_sleep(1.5)
-            while True:
+            while hero.health > 0 and monster.health > 0:
                 monster.basic_attack(hero)
-                universal_sleep(1.5)
-                death_screen(hero)      # ölüp ölmediğini kontrol etmek için
-                hero.fight(monster, hero)
+                death_screen(hero)
+                attack_success = hero.fight(monster, hero)
+
+                if not attack_success:
+                    continue  
+
                 if monster.health <= 0:
-                    universal_sleep(0.8)
                     print("Canavar yavaşcana toza dönüştü...")
                     universal_sleep(1)
                     print("Canavardan çikan toz etrafinda donup derinin icine girdi...")
-                    universal_sleep(1.3)
+                    universal_sleep(1.2)
                     hero_regeneration(hero)
                     print(f"Canin: {hero.health}\t Manan: {hero.mana}")
-                    universal_sleep(1.6)
+                    universal_sleep(1.3)
                     break
+
+                death_screen(hero)
 
 def event_statue(hero):
     oda = room.Room()
@@ -135,7 +146,7 @@ def event_statue(hero):
     # 1 iksir 2 bıçak 3 kılıç
     while True:
         try:
-            statue_choice = int(input("Seçiminizi Yapin:"))
+            statue_choice = int(input("Seçiminizi Yapin: "))
             if statue_choice in [1,2,3]:
                 break
             else:
@@ -146,31 +157,31 @@ def event_statue(hero):
 
     if statue_choice == 1: # iksir
         print("Yavaşca iksire doğru uzanıyorsun ve kapağını açıyorsun iksirin içindeki sıvının garip görünüşüne aldırmadan içmeye karar veriyorsun...")
-        universal_sleep(1.5)
+        universal_sleep(2)
         drink_chace = random_int(1, 3)
 
         if drink_chace == 1:
-            universal_sleep(0.5)
+            universal_sleep(0.8)
             print("Kemiklerinin ısındığını ve görünüşünün netleştiğini hissediyorsun")
             universal_sleep(1.5)
             hero_regeneration(hero)
             print("Canin artti...")
             universal_sleep(1)
-            print(f"Canin: {hero.health}\t Manan: {hero.mana}")
+            print(f"Canin: {hero.health}\t Manan: {hero.mana}\n")
 
         elif drink_chace == 2:
             print("Karadelikimsi siyah sıvının boğazını yaktığını hissediyorsun...")
             universal_sleep(1.5)
-            hero.health -= item.DrinkableItem.drinkable_items["Siyah iksir"]
+            hero.health += item.DrinkableItem.drinkable_items["Siyah iksir"]
             death_screen(hero)
             print("Canin azaldi...")
             universal_sleep(0.8)
-            print(f"Canin: {hero.health}\t Manan: {hero.mana}")
+            print(f"Canin: {hero.health}\t Manan: {hero.mana}\n")
             universal_sleep(0.9)
 
         elif drink_chace == 3:
             print("Karadeliğimsi sıvıyı yavşacana yuttun...")
-            print("Kendini garip hissediyorsun onun dışında hiçbir şey olmuyor. ")
+            print("Kendini garip hissediyorsun onun dışında hiçbir şey olmuyor.\n")
 
     if statue_choice == 2: # biçak
         print("Bu garip ritueli tamamlamaya karar veriyorsun...")
@@ -219,8 +230,12 @@ def event_statue(hero):
 
         print("Savaş Başladı !")
         
-        while True:
-            hero.fight(guardin, hero)
+        while hero.health > 0 and guardin.health > 0:
+            attack_success = hero.fight(guardin, hero)
+
+            if not attack_success:
+                continue  
+            
             if guardin.health <= 0:
                 print("Canavar yavaşcana toza dönüştü...")
                 universal_sleep(0.7)
@@ -238,3 +253,8 @@ def event_statue(hero):
                 guardin.basic_attack(hero)
                 universal_sleep(1.5)
             death_screen(hero)
+
+        while True:
+            hero.fight(guardin, hero)
+    after_choice_room = room.Room()
+    after_choice_room.statue_room_after_choice()

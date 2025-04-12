@@ -28,7 +28,7 @@ class Monster():
 
 def print_hero_health(hero, monster):
     if hero.health <= 0:
-        print("Öldün!")
+        pass
     else:
         print(f"Hasar aldın!\nCanın: {hero.health}")
         universal_sleep(0.8)

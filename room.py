@@ -25,19 +25,19 @@ class Room:
         universal_sleep(2.4)
     def describe_fountain_room(self):
         print("Soğuk taş duvarların yankı yaptığı, kasvetli bir zindan odasındasın.")
-        universal_sleep(1.7)
+        universal_sleep(2)
         print("Odanın ortasında, solgun mavi ışıklar saçan eski bir taş çeşme duruyor.")
-        universal_sleep(1.7)
+        universal_sleep(2)
         print("Çeşmeden dökülen su, sessizliği delen tek ses kaynağı gibi yankılanıyor.")
-        universal_sleep(1.7)
+        universal_sleep(2)
         print("Zeminde biriken su, karanlıkta parlayan küçük yansımalar yaratıyor.")
-        universal_sleep(1.7)
+        universal_sleep(2)
         print("Odanın büyüklüğü seni hem büyülüyor hem de huzursuz ediyor; sanki bu boşlukta yalnız değilsin.")
-        universal_sleep(1.7)
+        universal_sleep(2)
         print("Nemli hava boğazını yakıyor, ama aynı zamanda çeşmeden yükselen o hafif serinlik bir nebze rahatlatıyor.")
-        universal_sleep(1.7)
+        universal_sleep(2)
         print("İçindeki ses, buranın sırlarla dolu olduğunu fısıldıyor. Adımlarını dikkatli atmalı, gözünü dört açmalısın.")
-        universal_sleep(1.8)
+        universal_sleep(2)
 
     def describe_statue_room(self):
         print("Taş duvarlarla çevrili bu geniş odada, hava durgun ama yoğun bir enerji hissediliyor.")
@@ -77,7 +77,7 @@ class Room:
 
         print("Seçimin ne olursa olsun, dönüşü olmayacak gibi hissediyorsun.")
         universal_sleep(2)
-
+        print("\n1 - İksir\t 2 - Hançer\t 3 - Kılıç")
 
     def statue_room_after_choice(self):
         print("Seçimini yaptıktan sonra, odadaki her şey bir anlığına sessizliğe gömülüyor.")
@@ -94,7 +94,6 @@ class Room:
         universal_sleep(2.2)
         print("Kapı şimdi açık dikkatli adımlarla odadan ayırılıyorsun...")
         universal_sleep(2.2)
-        print("\n1 - İksir\t 2 - Hançer\t 3 - Kılıç")
 
     def last_room(self):
         print("Odanın kapısını açtığında, gözlerin bir anda karanlıkla sarılı bir alanla karşılaşıyor.")

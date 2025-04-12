@@ -1,5 +1,3 @@
-import random
-import monster
 import events
 import hero
 import room
@@ -36,7 +34,7 @@ def main():
     print(f"\nSuanki Canin:{hero.health}\n")
     universal_sleep(1)
 
-    for i in range(0,4):
+    for i in range(0,3):
         events.event_fight(hero)
         events.pick_random_event(hero)
     son_oda = room.Room()
